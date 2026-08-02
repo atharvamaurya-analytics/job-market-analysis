@@ -1,0 +1,43 @@
+name: Update job market data
+
+# Runs every Monday, and can also be triggered manually from the
+# "Actions" tab on GitHub (Run workflow button).
+on:
+  schedule:
+    - cron: '0 3 * * 1'
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Fetch latest job data
+        env:
+          ADZUNA_APP_ID: ${{ secrets.ADZUNA_APP_ID }}
+          ADZUNA_APP_KEY: ${{ secrets.ADZUNA_APP_KEY }}
+        run: python fetch_jobs.py
+
+      - name: Run analysis (regenerate charts)
+        run: python analyze.py
+
+      - name: Build interactive dashboard
+        run: python visualize_plotly.py
+
+      - name: Commit and push updated files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add jobs_raw.csv *.png dashboard.html
+          git commit -m "Auto-update: refresh job market data" || echo "Nothing to commit"
+          git push
