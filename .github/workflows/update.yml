@@ -1,11 +1,9 @@
 name: Update job market data
 
-# Runs every Monday, and can also be triggered manually from the
-# "Actions" tab on GitHub (Run workflow button).
 on:
-  schedule:
-    - cron: '0 3 * * 1'
   workflow_dispatch:
+  schedule:
+    - cron: "0 6 * * 1"   # every Monday, 6:00 AM UTC
 
 jobs:
   update:
@@ -17,27 +15,24 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+          python-version: "3.12"
 
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Fetch latest job data
+      - name: Fetch job postings
         env:
           ADZUNA_APP_ID: ${{ secrets.ADZUNA_APP_ID }}
           ADZUNA_APP_KEY: ${{ secrets.ADZUNA_APP_KEY }}
         run: python fetch_jobs.py
 
-      - name: Run analysis (regenerate charts)
+      - name: Run analysis
         run: python analyze.py
 
-      - name: Build interactive dashboard
-        run: python visualize_plotly.py
-
-      - name: Commit and push updated files
+      - name: Commit updated data and charts
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add jobs_raw.csv *.png dashboard.html
-          git commit -m "Auto-update: refresh job market data" || echo "Nothing to commit"
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add jobs_raw.csv top_skills.png top_cities.png experience_split.png
+          git diff --quiet && git diff --staged --quiet || git commit -m "Auto-update job market data"
           git push
