@@ -52,20 +52,39 @@ Data refreshes automatically every week via GitHub Actions.
 
 ## Charts
 
-**Most in-demand skills**
-![Top Skills](top_skills.png)
-
-**Top hiring cities**
-![Top Cities](top_cities.png)
-
-**Fresher vs experienced split**
-![Experience Split](experience_split.png)
-
-**Skill demand by role**
-![Skills by Role](skills_by_role.png)
-
-**Which skills are asked for together**
-![Skill Co-occurrence](skill_cooccurrence.png)
+<table>
+<tr>
+<td align="center" width="50%">
+<strong>Most In-Demand Skills</strong><br><br>
+<img src="top_skills.png" width="380" style="border:1px solid #d0d7de; border-radius:8px; padding:6px; background:#ffffff;"><br>
+<em>SQL leads by a wide margin, followed closely by Machine Learning, Excel, Git, and Python.</em>
+</td>
+<td align="center" width="50%">
+<strong>Top Hiring Cities</strong><br><br>
+<img src="top_cities.png" width="380" style="border:1px solid #d0d7de; border-radius:8px; padding:6px; background:#ffffff;"><br>
+<em>Bangalore alone accounts for roughly 3x the postings of the next city (Hyderabad).</em>
+</td>
+</tr>
+<tr>
+<td align="center" width="50%">
+<strong>Fresher vs Experienced</strong><br><br>
+<img src="experience_split.png" width="380" style="border:1px solid #d0d7de; border-radius:8px; padding:6px; background:#ffffff;"><br>
+<em>~70% of postings don't specify an experience level at all — worth applying regardless.</em>
+</td>
+<td align="center" width="50%">
+<strong>Skill Demand by Role</strong><br><br>
+<img src="skills_by_role.png" width="380" style="border:1px solid #d0d7de; border-radius:8px; padding:6px; background:#ffffff;"><br>
+<em>Data Analyst leans on SQL, Data Scientist leans on ML, Business Analyst leans on BI tools.</em>
+</td>
+</tr>
+<tr>
+<td align="center" colspan="2">
+<strong>Skill Co-occurrence</strong><br><br>
+<img src="skill_cooccurrence.png" width="500" style="border:1px solid #d0d7de; border-radius:8px; padding:6px; background:#ffffff;"><br>
+<em>SQL + Python is by far the most common pairing — the two are essentially required together.</em>
+</td>
+</tr>
+</table>
 
 ## Setup
 
